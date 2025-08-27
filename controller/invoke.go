@@ -23,9 +23,11 @@ func Invoke(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 
-	defer rc.Close()
-	b, _ := io.ReadAll(rc)
-	log.Println(string(b))
+	if rc != nil {
+		defer rc.Close()
+		b, _ := io.ReadAll(rc)
+		log.Println(string(b))
+	}
 
 	return c.String(http.StatusOK, "Hello, World!")
 }
