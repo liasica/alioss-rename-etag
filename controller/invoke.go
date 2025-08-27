@@ -18,11 +18,7 @@ func Invoke(c echo.Context) error {
 		log.Printf("%s: %s\n", s, strings.Join(ss, " | "))
 	}
 
-	rc, err := c.Request().GetBody()
-	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
-	}
-
+	rc := c.Request().Body
 	if rc != nil {
 		defer rc.Close()
 		b, _ := io.ReadAll(rc)
